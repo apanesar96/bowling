@@ -16,9 +16,14 @@ public class BowlingGameCalculator {
 		String[] frames = game.split("\\|");
 		int score = 0;
 		for (String frame : frames) {
-			if (frame.equals("-")) score += 0;
-			else if (frame.equals("X")) score += 10;
-			else score += parseInt(frame);
+			if (frame.equals("X")) score += 10;
+			else {
+				char[] frameThrows = frame.toCharArray(); // split in the number
+				for (char frameThrow : frameThrows) {
+					if (frameThrow == '-') score += 0;
+					else score += (int)frameThrow;
+				}
+			}
 		}
 		return score;
     }
