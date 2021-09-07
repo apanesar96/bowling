@@ -13,9 +13,13 @@ public class BowlingGameCalculator {
 	}
 
     public int calculateScore(String game) {
-		if (game.equals("-")) return 0;
-		if (game.equals("X")) return 10;
-
-		return parseInt(game);
+		String[] frames = game.split("\\|");
+		int score = 0;
+		for (String frame : frames) {
+			if (frame.equals("-")) score += 0;
+			else if (frame.equals("X")) score += 10;
+			else score += parseInt(frame);
+		}
+		return score;
     }
 }
