@@ -13,7 +13,9 @@ public class BowlingGameCalculator {
 	private static final char MISS = '-';
 
 	public int calculateScore(String game) {
-		char[] gameThrows = game.replaceAll(FRAME_BOUNDARY, "").toCharArray();
+		String[] games = game.split("\\|\\|");
+		String mainGame = games[0];
+		char[] gameThrows = mainGame.replaceAll(FRAME_BOUNDARY, "").toCharArray();
 		int score = 0;
 
 		for (int i = 0; i < gameThrows.length; i++) {
@@ -22,16 +24,26 @@ public class BowlingGameCalculator {
 				score += calculateSpareScore(gameThrows, i);
 			} else score += calculateThrowScore(currentThrow);
 		}
-		return score;
+		return score + calculateBonusScore(games);
     }
+
+	private int calculateBonusScore(String[] games) {
+		if (games.length == 1) return 0;
+		return calculateScore(games[1]);
+	}
 
 	private int calculateSpareScore(char[] gameThrows, int currentThrowIndex) {
 		char previousThrow= gameThrows[currentThrowIndex - 1];
 		int previousThrowScore = calculateThrowScore(previousThrow);
-		char nextThrow = gameThrows[currentThrowIndex + 1];
-		int nextThrowScore = calculateThrowScore(nextThrow);
+		int currentScore = 10 - previousThrowScore;
+		if (gameThrows.length > currentThrowIndex + 1) {
+			char nextThrow = gameThrows[currentThrowIndex + 1];
+			int nextThrowScore = calculateThrowScore(nextThrow);
 
-		return ((10 - previousThrowScore) + nextThrowScore);
+			return (currentScore + nextThrowScore);
+		}
+
+		return currentScore;
 	}
 
 	private int calculateThrowScore(char gameThrow) {
