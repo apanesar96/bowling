@@ -24,7 +24,9 @@ class BowlingGameCalculatorShould {
 			"9-|9-|9-|9-|9-|9-|9-|9-|9-|9-, 90",
 			"X|5, 15",
 			"7-|5, 12",
-			"5/|1-, 12"
+			"5/|1-, 12",
+			"5/|5/|5/|5/|5/|5/|5/|5/|5/|5/||5, 150"
+
 	})
 	public void calculate_score_of_game(String game, int expectScore) {
 		assertEquals(target.calculateScore(game), expectScore);
